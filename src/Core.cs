@@ -1,6 +1,7 @@
 ﻿using MelonLoader;
 using BoneLib;
 using UnityEngine;
+using Il2CppSLZ.Marrow;
 
 [assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "1.0.0", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
@@ -22,18 +23,21 @@ namespace NEP.NEDebug
         public void OnLevelLoaded(LevelInfo info)
         {
             NEDebug.Initialize();
-
-            NEDebug.Logger.Log("This is info");
-            NEDebug.Logger.Warning("This is a warning");
-            NEDebug.Logger.Error("This is an error");
         }
 
         public override void OnUpdate()
         {
-            if (Input.GetKey(KeyCode.P))
+            if (!Player.HandsExist)
             {
-                NEDebug.DrawDisc();
+                return;
             }
+
+            PhysicsRig rig = Player.PhysicsRig;
+            Vector3 pos = rig.torso.transform.position;
+            Quaternion rot = rig.torso.transform.rotation;
+            NEDebug.DrawBox(pos, rot, Color.blue);
+            NEDebug.DrawLine(pos, Vector3.zero, Color.red);
+            // NEDebug.DrawBox(Vector3.zero, Quaternion.identity, Color.red);
         }
     }
 }

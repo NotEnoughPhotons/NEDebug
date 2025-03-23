@@ -13,6 +13,9 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove=".gitignore" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
@@ -549,6 +552,7 @@
 		<Compile Include="src\Core.cs" />
 		<Compile Include="src\NEDebug.cs" />
 		<Compile Include="src\NEDebugVisualizer.cs" />
+		<Compile Include="src\NEDrawCommand.cs" />
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
