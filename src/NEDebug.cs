@@ -41,7 +41,7 @@ namespace NEP.NEDebug
                 return;
             }
 
-            m_instance.DrawLine(ray.origin, ray.direction, color);
+            m_instance.DrawLine(ray.origin, ray.origin + ray.direction, color);
         }
 
         public static void DrawPlane(Vector3 position)
