@@ -1,4 +1,5 @@
 ﻿using BoneLib;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,10 +25,6 @@ namespace NEP.NEDebug
             else
             {
                 m_material = new Material(Core.m_visMaterial);
-                m_material.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
-                m_material.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
-                m_material.SetInt("_Cull", (int)CullMode.Off);
-                m_material.SetInt("_ZWrite", 0);
             }
 
             m_commands = new Stack<NEDrawCommand>();
@@ -38,6 +35,7 @@ namespace NEP.NEDebug
 
         private void OnDestroy()
         {
+            m_urpRenderCallback -= OnEndContextRendering;
             m_commands.Clear();
             m_commands = null;
         }
@@ -59,13 +57,13 @@ namespace NEP.NEDebug
                 return;
             }
 
-
             while (m_commands.Count > 0)
             {
                 NEDrawCommand command = m_commands.Pop();
 
                 GL.PushMatrix();
                 m_material.SetPass(0);
+
                 GL.MultMatrix(command.transform);
 
                 GL.Begin(command.drawType);
@@ -106,6 +104,23 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.drawType = GL.LINE_STRIP;
             command.positions = [p1, p2];
+
+            command.color = color;
+            m_commands.Push(command);
+        }
+
+        internal void DrawPlane(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            NEDrawCommand command = new NEDrawCommand();
+            command.transform = Matrix4x4.identity;
+            command.transform *= Matrix4x4.TRS(position, rotation, scale);
+            command.drawType = GL.LINE_STRIP;
+
+            command.positions = [
+                Vector3.up * -0.5f + new Vector3(0, 0, 0), Vector3.up * -0.5f + new Vector3(1, 0, 0),
+                Vector3.up * -0.5f + new Vector3(1, 0, 0), Vector3.up * -0.5f + new Vector3(1, 1, 0),
+                Vector3.up * -0.5f + new Vector3(1, 1, 0), Vector3.up * -0.5f + new Vector3(0, 1, 0),
+                Vector3.up * -0.5f + new Vector3(0, 1, 0), Vector3.up * -0.5f + new Vector3(0, 0, 0)];
 
             command.color = color;
             m_commands.Push(command);
