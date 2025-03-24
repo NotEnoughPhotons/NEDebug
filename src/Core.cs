@@ -9,7 +9,7 @@ using Il2CppSLZ.Marrow;
 using BoneLib;
 using System.Diagnostics;
 
-[assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "1.0.0", "Not Enough Photons: adamdev", null)]
+[assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.1", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
 
 namespace NEP.NEDebug
