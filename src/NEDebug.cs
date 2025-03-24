@@ -44,30 +44,44 @@ namespace NEP.NEDebug
             m_instance.DrawLine(ray.origin, ray.origin + ray.direction, color);
         }
 
-        public static void DrawPlane(Vector3 position)
+        public static void DrawPlane(Vector3 position, Color color)
         {
             if (m_instance == null)
             {
                 return;
             }
 
-            m_instance.DrawLine(new Vector3(0, 0, 0), new Vector3(1, 0, 0), Color.white);
-            m_instance.DrawLine(new Vector3(1, 0, 0), new Vector3(1, 1, 0), Color.white);
-            m_instance.DrawLine(new Vector3(1, 1, 0), new Vector3(0, 1, 0), Color.white);
-            m_instance.DrawLine(new Vector3(0, 1, 0), new Vector3(0, 0, 0), Color.white);
+            m_instance.DrawPlane(position, Quaternion.identity, Vector3.one, color);
         }
 
-        public static void DrawPlane(Vector3 position, Quaternion rotation)
+        public static void DrawPlane(Vector3 position, Vector3 scale, Color color)
         {
             if (m_instance == null)
             {
                 return;
             }
 
-            m_instance.DrawLine(position + new Vector3(0, 0, 0), position + new Vector3(1, 0, 0), rotation, Color.white);
-            m_instance.DrawLine(position + new Vector3(1, 0, 0), position + new Vector3(1, 1, 0), rotation, Color.white);
-            m_instance.DrawLine(position + new Vector3(1, 1, 0), position + new Vector3(0, 1, 0), rotation, Color.white);
-            m_instance.DrawLine(position + new Vector3(0, 1, 0), position + new Vector3(0, 0, 0), rotation, Color.white);
+            m_instance.DrawPlane(position, Quaternion.identity, scale, color);
+        }
+
+        public static void DrawPlane(Vector3 position, Quaternion rotation, Color color)
+        {
+            if (m_instance == null)
+            {
+                return;
+            }
+
+            m_instance.DrawPlane(position, rotation, Vector3.one, color);
+        }
+
+        public static void DrawPlane(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            if (m_instance == null)
+            {
+                return;
+            }
+
+            m_instance.DrawPlane(position, rotation, scale, color);
         }
 
         public static void DrawBox(Vector3 position, Color color)
@@ -100,6 +114,8 @@ namespace NEP.NEDebug
             m_instance.DrawBox(position, rotation, scale, color);
         }
 
+#if DEBUG
+        // TODO: Reimplement so I can reuse this for cylinders and spheres
         public static void DrawDisc(Vector3 position)
         {
             if (m_instance == null)
@@ -109,7 +125,7 @@ namespace NEP.NEDebug
 
             int sides = 32;
 
-            for (int i = 0; i < sides; i++)
+            for (int i = 0; i < sides + 1; i++)
             {
                 float a = i / (float)sides;
                 float angle = a * Mathf.PI * 2;
@@ -118,6 +134,7 @@ namespace NEP.NEDebug
                 m_instance.DrawLine(position + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)), position + new Vector3(0f, 0f, 0f), Color.white);
             }
         }
+#endif
 
         internal static void Initialize()
         {
