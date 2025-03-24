@@ -11,5 +11,6 @@ namespace NEP.NEDebug
         public List<Vector3> positions;
         public Matrix4x4 transform;
         public Color color;
+        public bool orthographic;
     }
 }
