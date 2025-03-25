@@ -1,7 +1,6 @@
-﻿using Il2CppSystem.Net;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace NEP.NEDebug
+namespace NEP.NEDebug.Core
 {
     public static class NEDebug
     {
@@ -9,17 +8,17 @@ namespace NEP.NEDebug
         {
             public static void Log(string message)
             {
-                Core.m_logger.Msg(message);
+                Main.m_logger.Msg(message);
             }
 
             public static void Warning(string message)
             {
-                Core.m_logger.Warning(message);
+                Main.m_logger.Warning(message);
             }
 
             public static void Error(string message)
             {
-                Core.m_logger.Error(message);
+                Main.m_logger.Error(message);
             }
         }
 

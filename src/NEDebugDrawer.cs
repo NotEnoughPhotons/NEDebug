@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace NEP.NEDebug
+namespace NEP.NEDebug.Core
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
     internal sealed class NEDebugDrawer : MonoBehaviour
@@ -16,13 +16,13 @@ namespace NEP.NEDebug
 
         private void Awake()
         {
-            if (!Core.m_visMaterial)
+            if (!Main.m_visMaterial)
             {
                 NEDebug.Logger.Error("Failed to get visual material shader!");
             }
             else
             {
-                m_material = new Material(Core.m_visMaterial);
+                m_material = new Material(Main.m_visMaterial);
             }
 
             m_commands = new Stack<NEDrawCommand>();
