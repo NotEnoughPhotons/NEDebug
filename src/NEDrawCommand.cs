@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace NEP.NEDebug.Core
+namespace NEP.NEDebug
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct NEDrawCommand

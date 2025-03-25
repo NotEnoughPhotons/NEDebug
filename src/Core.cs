@@ -6,19 +6,19 @@ using UnityEngine;
 
 using BoneLib;
 
-[assembly: MelonInfo(typeof(NEP.NEDebug.Core.Main), "NEDebug", "0.0.2", "Not Enough Photons: adamdev", null)]
+[assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.3", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
 
-namespace NEP.NEDebug.Core
+namespace NEP.NEDebug
 {
-    public class Main : MelonMod
+    public class Core : MelonMod
     {
         internal static MelonLogger.Instance m_logger;
         internal static Material m_visMaterial;
 
         public override void OnInitializeMelon()
         {
-            m_logger = Melon<Main>.Logger;
+            m_logger = Melon<Core>.Logger;
             string packDir = HelperMethods.IsAndroid() ? "nedraw_shaders_quest.pack" : "nedraw_shaders.pack";
             AssetBundle bundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
             m_visMaterial = bundle.LoadPersistentAsset<Material>("VisDraw");
@@ -27,7 +27,7 @@ namespace NEP.NEDebug.Core
 
         public void OnLevelLoaded(LevelInfo info)
         {
-            NEDebug.Initialize();
+            NEDraw.Initialize();
         }
 
         public override void OnUpdate()

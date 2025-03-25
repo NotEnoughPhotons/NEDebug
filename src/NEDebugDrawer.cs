@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace NEP.NEDebug.Core
+namespace NEP.NEDebug
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
     internal sealed class NEDebugDrawer : MonoBehaviour
@@ -16,19 +16,19 @@ namespace NEP.NEDebug.Core
 
         private void Awake()
         {
-            if (!Main.m_visMaterial)
+            if (!Core.m_visMaterial)
             {
-                NEDebug.Logger.Error("Failed to get visual material shader!");
+                NELog.Error("Failed to get visual material shader!");
             }
             else
             {
-                m_material = new Material(Main.m_visMaterial);
+                m_material = new Material(Core.m_visMaterial);
             }
 
             m_commands = new Stack<NEDrawCommand>();
             m_urpRenderCallback += OnEndContextRendering;
             m_vrCamera = BoneLib.Player.ControllerRig.cameras[0];
-            NEDebug.Logger.Log($"Got {m_vrCamera.name} as the main NEDebug drawing camera");
+            NELog.Log($"Got {m_vrCamera.name} as the main NEDebug drawing camera");
         }
 
         private void OnDestroy()

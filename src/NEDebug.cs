@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
 
-namespace NEP.NEDebug.Core
+namespace NEP.NEDebug
 {
-    public static class NEDebug
+    public static class NELog
     {
-        public static class Logger
+        public static void Log(string message)
         {
-            public static void Log(string message)
-            {
-                Main.m_logger.Msg(message);
-            }
-
-            public static void Warning(string message)
-            {
-                Main.m_logger.Warning(message);
-            }
-
-            public static void Error(string message)
-            {
-                Main.m_logger.Error(message);
-            }
+            Core.m_logger.Msg(message);
         }
 
+        public static void Warning(string message)
+        {
+            Core.m_logger.Warning(message);
+        }
+
+        public static void Error(string message)
+        {
+            Core.m_logger.Error(message);
+        }
+    }
+
+    public static class NEDraw
+    {
         internal static NEDebugDrawer m_drawer;
 
         public static void DrawLine(Vector3 p1, Vector3 p2, Color color)
@@ -58,10 +58,14 @@ namespace NEP.NEDebug.Core
             command.drawType = GL.LINE_STRIP;
 
             command.positions = [
-                Vector3.up * -0.5f + new Vector3(0, 0, 0), Vector3.up * -0.5f + new Vector3(1, 0, 0),
-                Vector3.up * -0.5f + new Vector3(1, 0, 0), Vector3.up * -0.5f + new Vector3(1, 1, 0),
-                Vector3.up * -0.5f + new Vector3(1, 1, 0), Vector3.up * -0.5f + new Vector3(0, 1, 0),
-                Vector3.up * -0.5f + new Vector3(0, 1, 0), Vector3.up * -0.5f + new Vector3(0, 0, 0)];
+                Vector3.up * -0.5f + new Vector3(0, 0, 0),
+                Vector3.up * -0.5f + new Vector3(1, 0, 0),
+                Vector3.up * -0.5f + new Vector3(1, 0, 0),
+                Vector3.up * -0.5f + new Vector3(1, 1, 0),
+                Vector3.up * -0.5f + new Vector3(1, 1, 0),
+                Vector3.up * -0.5f + new Vector3(0, 1, 0),
+                Vector3.up * -0.5f + new Vector3(0, 1, 0),
+                Vector3.up * -0.5f + new Vector3(0, 0, 0)];
 
             command.color = color;
             m_drawer.PushCommand(command);
@@ -80,22 +84,38 @@ namespace NEP.NEDebug.Core
             command.drawType = GL.LINE_STRIP;
 
             command.positions = [
-                Vector3.one * -0.5f + new Vector3(0, 0, 0), Vector3.one * -0.5f + new Vector3(1, 0, 0),
-                Vector3.one * -0.5f + new Vector3(1, 0, 0), Vector3.one * -0.5f + new Vector3(1, 1, 0),
-                Vector3.one * -0.5f + new Vector3(1, 1, 0), Vector3.one * -0.5f + new Vector3(0, 1, 0),
-                Vector3.one * -0.5f + new Vector3(0, 1, 0), Vector3.one * -0.5f + new Vector3(0, 0, 0),
-                Vector3.one * -0.5f + new Vector3(0, 0, 1), Vector3.one * -0.5f + new Vector3(1, 0, 1),
-                Vector3.one * -0.5f + new Vector3(1, 0, 1), Vector3.one * -0.5f + new Vector3(1, 1, 1),
-                Vector3.one * -0.5f + new Vector3(1, 1, 1), Vector3.one * -0.5f + new Vector3(0, 1, 1),
-                Vector3.one * -0.5f + new Vector3(0, 1, 1), Vector3.one * -0.5f + new Vector3(0, 0, 1),
-                Vector3.one * -0.5f + new Vector3(0, 0, 0), Vector3.one * -0.5f + new Vector3(0, 0, 1),
-                Vector3.one * -0.5f + new Vector3(0, 0, 1), Vector3.one * -0.5f + new Vector3(0, 1, 1),
-                Vector3.one * -0.5f + new Vector3(0, 1, 1), Vector3.one * -0.5f + new Vector3(0, 1, 0),
-                Vector3.one * -0.5f + new Vector3(0, 1, 0), Vector3.one * -0.5f + new Vector3(0, 0, 0),
-                Vector3.one * -0.5f + new Vector3(1, 0, 0), Vector3.one * -0.5f + new Vector3(1, 0, 1),
-                Vector3.one * -0.5f + new Vector3(1, 0, 1), Vector3.one * -0.5f + new Vector3(1, 1, 1),
-                Vector3.one * -0.5f + new Vector3(1, 1, 1), Vector3.one * -0.5f + new Vector3(1, 1, 0),
-                Vector3.one * -0.5f + new Vector3(1, 1, 0), Vector3.one * -0.5f + new Vector3(1, 0, 0)];
+                Vector3.one * -0.5f + new Vector3(0, 0, 0),
+                Vector3.one * -0.5f + new Vector3(1, 0, 0),
+                Vector3.one * -0.5f + new Vector3(1, 0, 0),
+                Vector3.one * -0.5f + new Vector3(1, 1, 0),
+                Vector3.one * -0.5f + new Vector3(1, 1, 0),
+                Vector3.one * -0.5f + new Vector3(0, 1, 0),
+                Vector3.one * -0.5f + new Vector3(0, 1, 0),
+                Vector3.one * -0.5f + new Vector3(0, 0, 0),
+                Vector3.one * -0.5f + new Vector3(0, 0, 1),
+                Vector3.one * -0.5f + new Vector3(1, 0, 1),
+                Vector3.one * -0.5f + new Vector3(1, 0, 1),
+                Vector3.one * -0.5f + new Vector3(1, 1, 1),
+                Vector3.one * -0.5f + new Vector3(1, 1, 1),
+                Vector3.one * -0.5f + new Vector3(0, 1, 1),
+                Vector3.one * -0.5f + new Vector3(0, 1, 1),
+                Vector3.one * -0.5f + new Vector3(0, 0, 1),
+                Vector3.one * -0.5f + new Vector3(0, 0, 0),
+                Vector3.one * -0.5f + new Vector3(0, 0, 1),
+                Vector3.one * -0.5f + new Vector3(0, 0, 1),
+                Vector3.one * -0.5f + new Vector3(0, 1, 1),
+                Vector3.one * -0.5f + new Vector3(0, 1, 1),
+                Vector3.one * -0.5f + new Vector3(0, 1, 0),
+                Vector3.one * -0.5f + new Vector3(0, 1, 0),
+                Vector3.one * -0.5f + new Vector3(0, 0, 0),
+                Vector3.one * -0.5f + new Vector3(1, 0, 0),
+                Vector3.one * -0.5f + new Vector3(1, 0, 1),
+                Vector3.one * -0.5f + new Vector3(1, 0, 1),
+                Vector3.one * -0.5f + new Vector3(1, 1, 1),
+                Vector3.one * -0.5f + new Vector3(1, 1, 1),
+                Vector3.one * -0.5f + new Vector3(1, 1, 0),
+                Vector3.one * -0.5f + new Vector3(1, 1, 0),
+                Vector3.one * -0.5f + new Vector3(1, 0, 0)];
 
             command.color = color;
             m_drawer.PushCommand(command);
@@ -212,7 +232,7 @@ namespace NEP.NEDebug.Core
 
         internal static void UnInitialize()
         {
-            
+
         }
     }
 }
