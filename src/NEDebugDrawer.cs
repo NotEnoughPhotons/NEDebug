@@ -63,6 +63,7 @@ namespace NEP.NEDebug
 
                 GL.PushMatrix();
                 m_material.SetPass(0);
+                m_material.SetFloat("_ZTest", command.ztest ? 0.0f : 4.0f);
 
                 GL.MultMatrix(command.transform);
 

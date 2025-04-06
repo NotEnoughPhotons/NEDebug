@@ -23,12 +23,11 @@ namespace NEP.NEDebug
     public static class NEDraw
     {
         internal static NEDebugDrawer m_drawer;
+        internal static bool m_ztest;
 
         public static void ZTest(bool enabled)
         {
-            NEDrawCommand command = new NEDrawCommand();
-            command.ztest = enabled;
-            m_drawer.PushCommand(command);
+            m_ztest = enabled;
         }
 
         public static void DrawLine(Vector3 p1, Vector3 p2, Color color)
@@ -42,6 +41,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.drawType = GL.LINE_STRIP;
             command.positions = [p1, p2];
+            command.ztest = m_ztest;
 
             command.color = color;
             m_drawer.PushCommand(command);
@@ -63,6 +63,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.transform *= Matrix4x4.TRS(position, rotation, scale);
             command.drawType = GL.LINE_STRIP;
+            command.ztest = m_ztest;
 
             command.positions = [
                 Vector3.up * -0.5f + new Vector3(0, 0, 0),
@@ -89,6 +90,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.transform *= Matrix4x4.TRS(position, rotation, scale);
             command.drawType = GL.LINE_STRIP;
+            command.ztest = m_ztest;
 
             command.positions = [
                 Vector3.one * -0.5f + new Vector3(0, 0, 0),
@@ -128,12 +130,7 @@ namespace NEP.NEDebug
             m_drawer.PushCommand(command);
         }
 
-        public static void DrawDisc(Vector3 position, float radius = 1.0f)
-        {
-            DrawDisc(position, Quaternion.identity, radius);
-        }
-
-        public static void DrawDisc(Vector3 position, Quaternion rotation, float radius = 1.0f)
+        public static void DrawDisc(Vector3 position, Quaternion rotation, Color color, float radius = 1.0f)
         {
             if (!m_drawer)
             {
@@ -145,6 +142,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
             command.drawType = GL.LINE_STRIP;
+            command.ztest = m_ztest;
 
             int sides = 32;
 
@@ -163,7 +161,7 @@ namespace NEP.NEDebug
                 command.positions.Add(position + next * radius);
             }
 
-            command.color = Color.white;
+            command.color = color;
             m_drawer.PushCommand(command);
         }
 
@@ -179,6 +177,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
             command.drawType = GL.LINES;
+            command.ztest = m_ztest;
 
             int sides = 32;
 
@@ -240,6 +239,7 @@ namespace NEP.NEDebug
             command.transform = Matrix4x4.identity;
             command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
             command.drawType = GL.LINES;
+            command.ztest = m_ztest;
 
             int sides = 32;
 
