@@ -24,6 +24,13 @@ namespace NEP.NEDebug
     {
         internal static NEDebugDrawer m_drawer;
 
+        public static void ZTest(bool enabled)
+        {
+            NEDrawCommand command = new NEDrawCommand();
+            command.ztest = enabled;
+            m_drawer.PushCommand(command);
+        }
+
         public static void DrawLine(Vector3 p1, Vector3 p2, Color color)
         {
             if (!m_drawer)
@@ -160,7 +167,7 @@ namespace NEP.NEDebug
             m_drawer.PushCommand(command);
         }
 
-        public static void DrawCylinder(Vector3 position, float height = 1.0f, float radius = 1.0f)
+        public static void DrawCylinder(Vector3 position, Quaternion rotation, Color color, float height = 1.0f, float radius = 1.0f)
         {
             if (!m_drawer)
             {
@@ -170,12 +177,26 @@ namespace NEP.NEDebug
             NEDrawCommand command = new NEDrawCommand();
             command.positions = new List<Vector3>();
             command.transform = Matrix4x4.identity;
-            command.transform *= Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
+            command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
             command.drawType = GL.LINES;
 
-            DrawDisc(position, radius);
-            DrawDisc(position + Vector3.up * height * 0.5f, radius);
+            int sides = 32;
 
+            for (int i = 0; i < sides + 1; i++)
+            {
+                float a = i / (float)sides;
+                float angleA = a * Mathf.PI * 2f;
+
+                float b = (i + 1) / (float)sides;
+                float angleB = b * Mathf.PI * 2f;
+
+                Vector3 initial = new Vector3(radius * Mathf.Cos(angleA), 0f, radius * Mathf.Sin(angleA));
+                Vector3 next = new Vector3(radius * Mathf.Cos(angleB), 0f, radius * Mathf.Sin(angleB));
+
+                command.positions.Add(initial);
+                command.positions.Add(next);
+            }
+            
             for (int i = 0; i < 4; i++)
             {
                 float a = i / (float)4;
@@ -184,17 +205,31 @@ namespace NEP.NEDebug
                 Vector3 p1 = new Vector3(radius * Mathf.Cos(angle), 0f, radius * Mathf.Sin(angle));
                 Vector3 p2 = new Vector3(radius * Mathf.Cos(angle), height, radius * Mathf.Sin(angle));
 
-                command.positions.Add(position + p1);
-                command.positions.Add(position + p2);
+                command.positions.Add(p1);
+                command.positions.Add(p2);
+            }
+            
+            for (int i = 0; i < sides + 1; i++)
+            {
+                float a = i / (float)sides;
+                float angleA = a * Mathf.PI * 2f;
+
+                float b = (i + 1) / (float)sides;
+                float angleB = b * Mathf.PI * 2f;
+
+                Vector3 initial = new Vector3(radius * Mathf.Cos(angleA), height, radius * Mathf.Sin(angleA));
+                Vector3 next = new Vector3(radius * Mathf.Cos(angleB), height, radius * Mathf.Sin(angleB));
+
+                command.positions.Add(initial);
+                command.positions.Add(next);
             }
 
-            command.color = Color.white;
+            command.color = color;
             m_drawer.PushCommand(command);
         }
 
-        public static void DrawSphere(Vector3 position, float radius = 1.0f)
+        public static void DrawSphere(Vector3 position, Quaternion rotation, Color color, float radius = 1.0f)
         {
-#if DEBUG
             if (!m_drawer)
             {
                 return;
@@ -202,22 +237,62 @@ namespace NEP.NEDebug
 
             NEDrawCommand command = new NEDrawCommand();
             command.positions = new List<Vector3>();
-            // command.transform = Matrix4x4.identity;
-            // command.transform *= Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
-            command.drawType = GL.LINE_STRIP;
+            command.transform = Matrix4x4.identity;
+            command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
+            command.drawType = GL.LINES;
 
-            // TODO: This is a HACK!
-            // For some reason it won't look at the world right axis.
-            // The fix for now is to rotate it by 1 radian on the X axis, and then rotate -
-            // the Y axis forcefully.
-            // Could be because of a bad matrix multiplication.
-            DrawDisc(position, Quaternion.LookRotation(Vector3.right + (Vector3.up * 1000f)), radius);
-            DrawDisc(position, Quaternion.LookRotation(Vector3.up), radius);
-            DrawDisc(position, Quaternion.LookRotation(Vector3.forward), radius);
+            int sides = 32;
 
-            command.color = Color.white;
+            // X axis
+            for (int i = 0; i < sides + 1; i++)
+            {
+                float a = i / (float)sides;
+                float angleA = a * Mathf.PI * 2f;
+
+                float b = (i + 1) / (float)sides;
+                float angleB = b * Mathf.PI * 2f;
+
+                Vector3 initial = new Vector3(Mathf.Cos(angleA), 0f, Mathf.Sin(angleA));
+                Vector3 next = new Vector3(Mathf.Cos(angleB), 0f, Mathf.Sin(angleB));
+
+                command.positions.Add(initial * radius);
+                command.positions.Add(next * radius);
+            }
+
+            // Y axis
+            for (int i = 0; i < sides + 1; i++)
+            {
+                float a = i / (float)sides;
+                float angleA = a * Mathf.PI * 2f;
+
+                float b = (i + 1) / (float)sides;
+                float angleB = b * Mathf.PI * 2f;
+
+                Vector3 initial = new Vector3(Mathf.Cos(angleA), Mathf.Sin(angleA), 0f);
+                Vector3 next = new Vector3(Mathf.Cos(angleB), Mathf.Sin(angleB), 0f);
+
+                command.positions.Add(initial * radius);
+                command.positions.Add(next * radius);
+            }
+            
+            // Z axis
+            for (int i = 0; i < sides + 1; i++)
+            {
+                float a = i / (float)sides;
+                float angleA = a * Mathf.PI * 2f;
+
+                float b = (i + 1) / (float)sides;
+                float angleB = b * Mathf.PI * 2f;
+
+                Vector3 initial = new Vector3(0f, Mathf.Cos(angleA), Mathf.Sin(angleA));
+                Vector3 next = new Vector3(0f, Mathf.Cos(angleB), Mathf.Sin(angleB));
+
+                command.positions.Add(initial * radius);
+                command.positions.Add(next * radius);
+            }
+            
+            command.color = color;
             m_drawer.PushCommand(command);
-#endif
         }
 
         internal static void Initialize()
