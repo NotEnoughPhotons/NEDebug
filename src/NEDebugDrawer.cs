@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Il2CppSLZ.Marrow;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace NEP.NEDebug
@@ -27,7 +28,8 @@ namespace NEP.NEDebug
 
             m_commands = new Stack<NEDrawCommand>();
             m_urpRenderCallback += OnEndContextRendering;
-            m_vrCamera = BoneLib.Player.ControllerRig.cameras[0];
+            OpenControllerRig controllerRig = FindObjectOfType<OpenControllerRig>();
+            m_vrCamera = controllerRig.cameras[0];
             NELog.Log($"Got {m_vrCamera.name} as the main NEDebug drawing camera");
         }
 
