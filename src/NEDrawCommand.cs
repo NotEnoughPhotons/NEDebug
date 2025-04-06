@@ -12,5 +12,6 @@ namespace NEP.NEDebug
         public Matrix4x4 transform;
         public Color color;
         public bool orthographic;
+        public bool ztest;
     }
 }
