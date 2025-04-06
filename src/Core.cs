@@ -24,7 +24,12 @@ namespace NEP.NEDebug
             m_visMaterial = bundle.LoadPersistentAsset<Material>("VisDraw");
             Hooking.OnLevelLoaded += (info) => NEDraw.Initialize();
         }
-        
+
+        public override void OnDeinitializeMelon()
+        {
+            NEDraw.UnInitialize();
+        }
+
         public override void OnUpdate()
         {
 #if DEBUG
