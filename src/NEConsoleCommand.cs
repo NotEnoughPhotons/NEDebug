@@ -8,11 +8,7 @@ namespace NEP.NEDebug.Console
     {
         public NEConsoleCommand(string command)
         {
-            Core.m_logger.Msg("console command added");
-            
             m_command = command;
-            
-            NEConsole.AddCommand(null, m_command);
         }
 
         public string Command
@@ -29,16 +25,7 @@ namespace NEP.NEDebug.Console
                 }
             }
         }
-
-        public string Caller
-        {
-            get
-            {
-                return m_caller;
-            }
-        }
         
         private string m_command;
-        private string m_caller;
     }
 }

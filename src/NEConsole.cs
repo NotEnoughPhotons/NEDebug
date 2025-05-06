@@ -4,31 +4,42 @@ namespace NEP.NEDebug.Console
 {
     public static class NEConsole
     {
-        public struct ConsoleMethodGroup
+        public static Dictionary<string, MethodInfo> Commands = new Dictionary<string, MethodInfo>();
+
+        internal static void SweepAssembly()
         {
-            public ConsoleMethodGroup(string method, string command)
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            foreach (var type in assembly.GetTypes())
             {
-                this.method = method;
-                this.command = command;
+                foreach (var method in type.GetMethods())
+                {
+                    NEConsoleCommand command = method.GetCustomAttribute<NEConsoleCommand>();
+                    
+                    if (command == null)
+                    {
+                        continue;
+                    }
+                    
+                    Commands.Add(command.Command, method);
+                }
             }
-            
-            public string method;
-            public string command;
+        }
+        
+        public static void AddCommand(string command, MethodInfo method)
+        {
+            Commands.Add(command, method);
         }
 
-        public static IReadOnlyList<ConsoleMethodGroup> Methods => m_methods.AsReadOnly();
-
-        private static List<ConsoleMethodGroup> m_methods;
-
-        public static void Initialize()
+        public static void Execute(string command)
         {
-            m_methods = new List<ConsoleMethodGroup>();
-        }
-
-        public static void AddCommand(string method, string command)
-        {
-            ConsoleMethodGroup group = new ConsoleMethodGroup(method, command);
-            m_methods.Add(group);
+            if (Commands.TryGetValue(command, out MethodInfo method))
+            {
+                if (method.IsStatic)
+                {
+                    method.Invoke(null, null);
+                }
+            }
         }
     }
 }

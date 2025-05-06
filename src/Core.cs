@@ -21,7 +21,7 @@ namespace NEP.NEDebug
         public override void OnInitializeMelon()
         {
             m_logger = Melon<Core>.Logger;
-            NEConsole.Initialize();
+            NEConsole.SweepAssembly();
             string packDir = HelperMethods.IsAndroid() ? "nedraw_shaders_quest.pack" : "nedraw_shaders.pack";
             AssetBundle bundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
             m_visMaterial = bundle.LoadPersistentAsset<Material>("VisDraw");
@@ -31,12 +31,6 @@ namespace NEP.NEDebug
         public override void OnDeinitializeMelon()
         {
             NEDraw.UnInitialize();
-        }
-
-        [NEConsoleCommand("testconsolecommand")]
-        public void TestConsoleCommand()
-        {
-            m_logger.Msg("Hello world!");
         }
     }
 }
