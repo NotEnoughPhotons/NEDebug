@@ -3,11 +3,13 @@
 # Introduction
 **NEDebug** is a debugging library geared towards mod developers of BONELAB. Whether you are a puritan using the SDK, or a Lava Gang code monkey, NEDebug is for you.
 
-This library aims to make the process of debugging mods much easier, by providing creators with the ability to visualize what is happening under the curtains.
+This library aims to make the process of debugging mods much easier, with one of the features allowing developers to visualize what is happening under the curtains.
 
 # Usage
 NEDebug is a simple library that shouldn't require much documentation to explain, which is one of the goals of the project. Each function name should tell you exactly what it does. Anything not exposed publicly is marked as internal.
 ## Functions
+### Console (Attributes)
+- ``NEConsoleCommand``
 ### Switches
 - ``NEDraw.ZTest``
 ### Drawing
