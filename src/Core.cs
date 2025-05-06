@@ -6,6 +6,8 @@ using UnityEngine;
 
 using BoneLib;
 
+using NEP.NEDebug.Console;
+
 [assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.4", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
 
@@ -19,6 +21,7 @@ namespace NEP.NEDebug
         public override void OnInitializeMelon()
         {
             m_logger = Melon<Core>.Logger;
+            NEConsole.Initialize();
             string packDir = HelperMethods.IsAndroid() ? "nedraw_shaders_quest.pack" : "nedraw_shaders.pack";
             AssetBundle bundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
             m_visMaterial = bundle.LoadPersistentAsset<Material>("VisDraw");
@@ -30,10 +33,10 @@ namespace NEP.NEDebug
             NEDraw.UnInitialize();
         }
 
-        public override void OnUpdate()
+        [NEConsoleCommand("testconsolecommand")]
+        public void TestConsoleCommand()
         {
-#if DEBUG
-#endif
+            m_logger.Msg("Hello world!");
         }
     }
 }
