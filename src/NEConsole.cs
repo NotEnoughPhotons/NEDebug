@@ -109,25 +109,30 @@ namespace NEP.NEDebug.Console
             m_consoleInput = m_consoleGo.transform.Find("Console/InputField").GetComponent<TMP_InputField>();
             m_eventSystem = m_consoleGo.GetComponent<EventSystem>();
             m_consoleInput.onSubmit.AddListener(new Action<string>((input) => { Execute(input); }));
-            SweepAssembly();
+            ScanAssemblies();
         }
         
-        internal static void SweepAssembly()
+        internal static void ScanAssemblies()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-
-            foreach (var type in assembly.GetTypes())
+            IEnumerable<MelonMod> mods = MelonMod.RegisteredMelons;
+                
+            foreach (var mod in mods)
             {
-                foreach (var method in type.GetMethods())
+                Assembly assembly = mod.MelonAssembly.Assembly;
+                
+                foreach (var type in assembly.GetTypes())
                 {
-                    NEConsoleCommand command = method.GetCustomAttribute<NEConsoleCommand>();
-                    
-                    if (command == null)
+                    foreach (var method in type.GetMethods())
                     {
-                        continue;
+                        NEConsoleCommand command = method.GetCustomAttribute<NEConsoleCommand>();
+                                    
+                        if (command == null)
+                        {
+                            continue;
+                        }
+                                    
+                        AddCommand(command.Command, method);
                     }
-                    
-                    AddCommand(command.Command, method);
                 }
             }
         }
