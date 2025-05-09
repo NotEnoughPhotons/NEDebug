@@ -8,6 +8,8 @@ This library aims to make the process of debugging mods much easier, with one of
 # Usage
 NEDebug is a simple library that shouldn't require much documentation to explain, which is one of the goals of the project. Each function name should tell you exactly what it does. Anything not exposed publicly is marked as internal.
 ## Functions
+### Console (Attributes)
+- ``NEConsoleCommand``
 ### Switches
 - ``NEDraw.ZTest``
 ### Drawing
