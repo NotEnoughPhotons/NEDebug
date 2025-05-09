@@ -179,6 +179,10 @@ namespace NEP.NEDebug.Console
                     {
                         parsedValue = floatValue;
                     }
+                    else if (parameterType == typeof(string))
+                    {
+                        parsedValue = token.token;
+                    }
 
                     arguments.Add(parsedValue);
                 }

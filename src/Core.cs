@@ -50,12 +50,5 @@ namespace NEP.NEDebug
                 NEConsole.FocusConsole();
             }
         }
-
-        [NEConsoleCommand("setpos")]
-        public static void PrintPosition(float x, float y, float z)
-        {
-            Vector3 pos = new Vector3(x, y, z);
-            m_logger.Msg($"({pos.x}, {pos.y}, {pos.z})");
-        }
     }
 }
