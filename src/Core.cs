@@ -51,10 +51,11 @@ namespace NEP.NEDebug
             }
         }
 
-        [NEConsoleCommand("testfunction")]
-        public static void TestFunction()
+        [NEConsoleCommand("setpos")]
+        public static void PrintPosition(float x, float y, float z)
         {
-            Melon<Core>.Logger.Msg("Hello world!");
+            Vector3 pos = new Vector3(x, y, z);
+            m_logger.Msg($"({pos.x}, {pos.y}, {pos.z})");
         }
     }
 }

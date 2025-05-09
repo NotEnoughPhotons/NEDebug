@@ -94,7 +94,7 @@ namespace NEP.NEDebug.Console
             }
         }
         
-        public static Dictionary<string, MethodInfo> Commands = new();
+        public static Dictionary<string, NEConsoleCommand> RegisteredCommands = new();
 
         private static GameObject m_consoleGo;
         private static TMP_InputField m_consoleInput;
@@ -131,25 +131,63 @@ namespace NEP.NEDebug.Console
                             continue;
                         }
                                     
-                        AddCommand(command.Command, method);
+                        AddCommand(command, method);
                     }
                 }
             }
         }
         
-        public static void AddCommand(string command, MethodInfo method)
+        public static void AddCommand(NEConsoleCommand command, MethodInfo method)
         {
-            Commands.Add(command, method);
+            command.SetMethod(method);
+            RegisteredCommands.Add(command.Command, command);
         }
 
         public static void Execute(string command)
         {
-            if (Commands.TryGetValue(command, out MethodInfo method))
+            string[] rawTokens = NECommandTokenizer.SplitCommandInput(command);
+            NEConsoleCommand consoleCommand = RegisteredCommands[rawTokens[0]];
+            List<NECommandToken> tokens = NECommandTokenizer.Tokenize(consoleCommand, rawTokens);
+
+            MethodInfo commandMethod = consoleCommand.Method;
+            ParameterInfo[] parameters = commandMethod.GetParameters();
+            
+            if (parameters.Length > 0)
             {
-                if (method.IsStatic)
+                List<object> arguments = new List<object>();
+                
+                for (int i = 0; i < tokens.Count; i++)
                 {
-                    method.Invoke(null, null);
+                    NECommandToken token = tokens[i];
+                    ParameterInfo parameter = parameters[i];
+                    
+                    Type tokenType = token.type;
+                    Type parameterType = parameter.ParameterType;
+
+                    if (tokenType != parameterType)
+                    {
+                        break;
+                    }
+
+                    object parsedValue = null;
+
+                    if (parameterType == typeof(int) && int.TryParse(token.token, out int intValue))
+                    {
+                        parsedValue = intValue;
+                    }
+                    else if (parameterType == typeof(float) && float.TryParse(token.token, out float floatValue))
+                    {
+                        parsedValue = floatValue;
+                    }
+
+                    arguments.Add(parsedValue);
                 }
+                
+                commandMethod.Invoke(null, arguments.ToArray());;
+            }
+            else
+            {
+                commandMethod.Invoke(null, null);
             }
         }
 

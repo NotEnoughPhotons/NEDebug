@@ -112,7 +112,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Include="src\Console\NECommandParser.cs" />
+		<Compile Include="src\Console\NECommandTokenizer.cs" />
+		<Compile Include="src\Console\NECommandToken.cs" />
 		<Compile Include="src\Console\NEConsole.cs" />
 		<Compile Include="src\Console\NEConsoleCommand.cs" />
 		<Compile Include="src\Core.cs" />

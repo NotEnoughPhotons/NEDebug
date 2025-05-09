@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace NEP.NEDebug.Console
 {
@@ -25,7 +24,21 @@ namespace NEP.NEDebug.Console
                 }
             }
         }
+
+        public MethodInfo Method
+        {
+            get
+            {
+                return m_method;
+            }
+        }
         
         private string m_command;
+        private MethodInfo m_method;
+
+        public void SetMethod(MethodInfo method)
+        {
+            m_method = method;
+        }
     }
 }
