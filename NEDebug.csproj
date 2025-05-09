@@ -46,20 +46,8 @@
 		<Reference Include="Il2CppSystem">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
 		</Reference>
-		<Reference Include="Il2CppSystem.IO.Compression">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.IO.Compression.dll</HintPath>
-		</Reference>
-		<Reference Include="Il2CppSystem.IO.Compression.FileSystem">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.IO.Compression.FileSystem.dll</HintPath>
-		</Reference>
-		<Reference Include="Il2CppSystem.Net.Http">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Net.Http.dll</HintPath>
-		</Reference>
 		<Reference Include="Il2CppSystem.Numerics">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Numerics.dll</HintPath>
-		</Reference>
-		<Reference Include="Il2CppSystem.Runtime.CompilerServices.Unsafe">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Runtime.CompilerServices.Unsafe.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppSystem.Runtime.Serialization">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Runtime.Serialization.dll</HintPath>
@@ -67,26 +55,11 @@
 		<Reference Include="Il2CppSystem.ServiceModel.Internals">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.ServiceModel.Internals.dll</HintPath>
 		</Reference>
-		<Reference Include="Il2CppSystem.Threading.Channels">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Threading.Channels.dll</HintPath>
-		</Reference>
-		<Reference Include="Il2CppSystem.Xml">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Xml.dll</HintPath>
-		</Reference>
-		<Reference Include="Il2CppSystem.Xml.Linq">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Xml.Linq.dll</HintPath>
-		</Reference>
 		<Reference Include="Il2Cpp__Generated">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2Cpp__Generated.dll</HintPath>
 		</Reference>
-		<Reference Include="Unity.Profiling.Core">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Unity.Profiling.Core.dll</HintPath>
-		</Reference>
 		<Reference Include="Unity.TextMeshPro">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
-		</Reference>
-		<Reference Include="Unity.Timeline">
-			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Unity.Timeline.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.AssetBundleModule">
 			<HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
