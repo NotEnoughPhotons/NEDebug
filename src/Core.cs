@@ -26,8 +26,17 @@ namespace NEP.NEDebug
         {
             string packDir = HelperMethods.IsAndroid() ? "nedebug_quest.pack" : "nedebug.pack";
             m_assetBundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
+
+            if (m_assetBundle == null)
+            {
+                m_logger.BigError("Failed to load the NEDebug bundle!");
+                return;
+            }
+            
             m_visMaterial = m_assetBundle.LoadPersistentAsset<Material>("VisDraw");
             m_consoleObject = m_assetBundle.LoadPersistentAsset<GameObject>("ConsoleBar");
+            
+            NEConsole.ScanAssemblies();
         }
         
         public override void OnInitializeMelon()
@@ -50,7 +59,7 @@ namespace NEP.NEDebug
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Tilde))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 NEConsole.ShowConsole();
                 NEConsole.FocusConsole();
