@@ -121,6 +121,7 @@
 		<Compile Include="src\Console\NECommandToken.cs" />
 		<Compile Include="src\Console\NEConsole.cs" />
 		<Compile Include="src\Console\NEConsoleCommand.cs" />
+		<Compile Include="src\Console\NEGenericCommands.cs" />
 		<Compile Include="src\Core.cs" />
 		<Compile Include="src\Drawing\NEDebugDrawer.cs" />
 		<Compile Include="src\Drawing\NEDraw.cs" />
