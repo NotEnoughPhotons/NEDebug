@@ -15,7 +15,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove=".gitignore" />
-	  <None Remove="Resources\nedraw_shaders.pack" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -106,6 +105,12 @@
 
 	</ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\nedebug.pack">
+			<CustomToolNamespace>NEP.NEDebug</CustomToolNamespace>
+		</EmbeddedResource>
+	</ItemGroup>
+	
 	<PropertyGroup>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -121,12 +126,6 @@
 		<Compile Include="src\Drawing\NEDraw.cs" />
 		<Compile Include="src\Drawing\NEDrawCommand.cs" />
 		<Compile Include="src\Logging\NELog.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Resources\nedraw_shaders.pack">
-	    <CustomToolNamespace>NEP.NEDebug</CustomToolNamespace>
-	  </EmbeddedResource>
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
