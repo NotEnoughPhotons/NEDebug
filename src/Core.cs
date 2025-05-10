@@ -16,6 +16,7 @@ namespace NEP.NEDebug
 {
     internal class Core : MelonMod
     {
+        internal static AssetBundle m_assetBundle;
         internal static MelonLogger.Instance m_logger;
         internal static Material m_visMaterial;
 
@@ -24,10 +25,10 @@ namespace NEP.NEDebug
         public override void OnInitializeMelon()
         {
             m_logger = Melon<Core>.Logger;
-            string packDir = HelperMethods.IsAndroid() ? "nedraw_shaders_quest.pack" : "nedraw_shaders.pack";
-            AssetBundle bundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
-            m_visMaterial = bundle.LoadPersistentAsset<Material>("VisDraw");
-            m_consoleObject = bundle.LoadPersistentAsset<GameObject>("ConsoleBar");
+            string packDir = HelperMethods.IsAndroid() ? "nedebug_quest.pack" : "nedebug.pack";
+            m_assetBundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
+            m_visMaterial = m_assetBundle.LoadPersistentAsset<Material>("VisDraw");
+            m_consoleObject = m_assetBundle.LoadPersistentAsset<GameObject>("ConsoleBar");
             NEConsole.Compatibility.SetHarmonyInstance(HarmonyInstance);
             NEConsole.Compatibility.FlatPlayerSetup();
             Hooking.OnLevelLoaded += (info) =>
@@ -44,7 +45,7 @@ namespace NEP.NEDebug
 
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Tilde))
             {
                 NEConsole.ShowConsole();
                 NEConsole.FocusConsole();
