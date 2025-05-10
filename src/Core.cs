@@ -21,14 +21,19 @@ namespace NEP.NEDebug
         internal static Material m_visMaterial;
 
         internal static GameObject m_consoleObject;
-        
-        public override void OnInitializeMelon()
+
+        private void LoadBundles()
         {
-            m_logger = Melon<Core>.Logger;
             string packDir = HelperMethods.IsAndroid() ? "nedebug_quest.pack" : "nedebug.pack";
             m_assetBundle = HelperMethods.LoadEmbeddedAssetBundle(Assembly.GetExecutingAssembly(), "NEP.NEDebug.Resources." + packDir);
             m_visMaterial = m_assetBundle.LoadPersistentAsset<Material>("VisDraw");
             m_consoleObject = m_assetBundle.LoadPersistentAsset<GameObject>("ConsoleBar");
+        }
+        
+        public override void OnInitializeMelon()
+        {
+            m_logger = Melon<Core>.Logger;
+            LoadBundles();
             NEConsole.Compatibility.SetHarmonyInstance(HarmonyInstance);
             NEConsole.Compatibility.FlatPlayerSetup();
             Hooking.OnLevelLoaded += (info) =>
