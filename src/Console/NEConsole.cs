@@ -99,6 +99,7 @@ namespace NEP.NEDebug.Console
         private static GameObject m_consoleGo;
         private static TMP_InputField m_consoleInput;
         private static EventSystem m_eventSystem;
+        private static EventSystem m_gameEventSystem;
 
         private static bool m_showConsole;
 
@@ -109,6 +110,7 @@ namespace NEP.NEDebug.Console
             m_consoleInput = m_consoleGo.transform.Find("Console/InputField").GetComponent<TMP_InputField>();
             m_eventSystem = m_consoleGo.GetComponent<EventSystem>();
             m_consoleInput.onSubmit.AddListener(new Action<string>((input) => { Execute(input); }));
+            m_gameEventSystem = GetGameEventSystem();
         }
         
         internal static void ScanAssemblies()
@@ -205,12 +207,27 @@ namespace NEP.NEDebug.Console
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = m_showConsole;
             m_consoleGo.SetActive(m_showConsole);
-            EventSystem.current = m_eventSystem;
+            EventSystem.current = m_showConsole ? m_eventSystem : m_gameEventSystem;
         }
 
         public static void FocusConsole()
         {
             m_consoleInput.Select();
+        }
+
+        internal static EventSystem GetGameEventSystem()
+        {
+            EventSystem eventSystem = null;
+            foreach (var system in EventSystem.m_EventSystems)
+            {
+                if (system.name == "LegacyUIEventSystem")
+                {
+                    eventSystem = system;
+                    break;
+                }
+            }
+
+            return eventSystem;
         }
     }
 }
