@@ -109,7 +109,6 @@ namespace NEP.NEDebug.Console
             m_consoleInput = m_consoleGo.transform.Find("Console/InputField").GetComponent<TMP_InputField>();
             m_eventSystem = m_consoleGo.GetComponent<EventSystem>();
             m_consoleInput.onSubmit.AddListener(new Action<string>((input) => { Execute(input); }));
-            ScanAssemblies();
         }
         
         internal static void ScanAssemblies()
@@ -203,6 +202,7 @@ namespace NEP.NEDebug.Console
         public static void ShowConsole()
         {
             m_showConsole = !m_showConsole;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = m_showConsole;
             m_consoleGo.SetActive(m_showConsole);
             EventSystem.current = m_eventSystem;
