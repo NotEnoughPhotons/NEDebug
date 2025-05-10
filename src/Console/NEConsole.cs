@@ -146,7 +146,12 @@ namespace NEP.NEDebug.Console
         public static void Execute(string command)
         {
             string[] rawTokens = NECommandTokenizer.SplitCommandInput(command);
-            NEConsoleCommand consoleCommand = RegisteredCommands[rawTokens[0]];
+            
+            if (!RegisteredCommands.TryGetValue(rawTokens[0], out NEConsoleCommand consoleCommand))
+            {
+                return;
+            }
+            
             List<NECommandToken> tokens = NECommandTokenizer.Tokenize(consoleCommand, rawTokens);
 
             MethodInfo commandMethod = consoleCommand.Method;
