@@ -5,9 +5,8 @@ using MelonLoader;
 using UnityEngine;
 
 using BoneLib;
-
 using NEP.NEDebug.Console;
-using UnityEngine.EventSystems;
+using NEP.NEDebug.Benchmark;
 
 [assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.4", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
@@ -49,6 +48,7 @@ namespace NEP.NEDebug
             {
                 NEDraw.Initialize();
                 NEConsole.Initialize();
+                NEGenericCommands.currentLevel = info;
             };
         }
 
