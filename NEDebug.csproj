@@ -117,6 +117,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="src\Benchmark\NEBenchmark.cs" />
+		<Compile Include="src\Benchmark\NEProfiledMethod.cs" />
 		<Compile Include="src\Console\NECommandTokenizer.cs" />
 		<Compile Include="src\Console\NECommandToken.cs" />
 		<Compile Include="src\Console\NEConsole.cs" />
