@@ -129,6 +129,7 @@
 		<Compile Include="src\Drawing\NEDraw.cs" />
 		<Compile Include="src\Drawing\NEDrawCommand.cs" />
 		<Compile Include="src\Logging\NELog.cs" />
+		<Compile Include="src\Pooling\NEPool.cs" />
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

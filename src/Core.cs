@@ -6,7 +6,6 @@ using UnityEngine;
 
 using BoneLib;
 using NEP.NEDebug.Console;
-using NEP.NEDebug.Benchmark;
 
 [assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.4", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
@@ -20,6 +19,7 @@ namespace NEP.NEDebug
         internal static Material m_visMaterial;
 
         internal static GameObject m_consoleObject;
+        internal static GameObject m_textObject;
 
         private void LoadBundles()
         {
@@ -34,6 +34,7 @@ namespace NEP.NEDebug
             
             m_visMaterial = m_assetBundle.LoadPersistentAsset<Material>("VisDraw");
             m_consoleObject = m_assetBundle.LoadPersistentAsset<GameObject>("ConsoleBar");
+            m_textObject = m_assetBundle.LoadPersistentAsset<GameObject>("NEDebugDrawText");
             
             NEConsole.ScanAssemblies();
         }

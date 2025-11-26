@@ -1,4 +1,5 @@
 ﻿using Il2CppSLZ.Marrow;
+using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,6 +15,7 @@ namespace NEP.NEDebug
         private Stack<NEDrawCommand> m_commands;
         private Material m_material;
         private Camera m_vrCamera;
+        private TextMeshPro m_textMesh;
 
         private void Awake()
         {
@@ -31,6 +33,9 @@ namespace NEP.NEDebug
             OpenControllerRig controllerRig = FindObjectOfType<OpenControllerRig>();
             m_vrCamera = controllerRig.cameras[0];
             NELog.Log($"Got {m_vrCamera.name} as the main NEDebug drawing camera");
+            
+            m_textMesh = GameObject.Instantiate(Core.m_textObject).GetComponent<TextMeshPro>();
+            m_textMesh.transform.localScale = new Vector3(-1, 1, 1);
         }
 
         private void OnDestroy()
@@ -61,6 +66,22 @@ namespace NEP.NEDebug
             {
                 NEDrawCommand command = m_commands.Pop();
 
+                if (m_textMesh != null)
+                {
+                    if (command.text != string.Empty)
+                    {
+                        m_textMesh.text = command.text;
+                        m_textMesh.fontSize = command.textSize;
+                        m_textMesh.transform.position = new Vector3(command.transform[0, 3], command.transform[1, 3], command.transform[2, 3]);
+                        m_textMesh.transform.rotation = Quaternion.LookRotation(m_vrCamera.transform.position - m_textMesh.transform.position, Vector3.up);
+                    }
+                }
+
+                if (command.drawType == 0)
+                {
+                    continue;
+                }
+                
                 GL.PushMatrix();
                 m_material.SetPass(0);
                 m_material.SetFloat("_ZTest", command.ztest ? 0.0f : 4.0f);

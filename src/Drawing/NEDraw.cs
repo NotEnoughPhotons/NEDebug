@@ -277,6 +277,34 @@ namespace NEP.NEDebug
             m_drawer.PushCommand(command);
         }
 
+        public static void DrawText(string text, Vector3 position = default, Quaternion rotation = default)
+        {
+            if (!m_drawer)
+            {
+                return;
+            }
+            
+            NEDrawCommand command = new NEDrawCommand();
+            command.transform = Matrix4x4.identity;
+            command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
+            command.text = text;
+            m_drawer.PushCommand(command);
+        }
+        
+        public static void DrawText(string text, float size = 1f, Vector3 position = default, Quaternion rotation = default)
+        {
+            if (!m_drawer)
+            {
+                return;
+            }
+            
+            NEDrawCommand command = new NEDrawCommand();
+            command.transform = Matrix4x4.identity;
+            command.transform *= Matrix4x4.TRS(position, rotation, Vector3.one);
+            command.text = text;
+            m_drawer.PushCommand(command);
+        }
+
         internal static void Initialize()
         {
             if (!m_drawer)

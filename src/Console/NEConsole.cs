@@ -120,6 +120,12 @@ namespace NEP.NEDebug.Console
             foreach (var mod in mods)
             {
                 Assembly assembly = mod.MelonAssembly.Assembly;
+                Type[] types = assembly.GetTypes();
+
+                if (types.Length == 0)
+                {
+                    return;
+                }
                 
                 foreach (var type in assembly.GetTypes())
                 {
