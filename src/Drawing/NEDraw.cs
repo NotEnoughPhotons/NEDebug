@@ -48,12 +48,12 @@ namespace NEP.NEDebug
             command.ztest = m_ztest;
 
             command.positions = [
-                Vector3.one * -0.5f + new Vector3(0, -1f, 0),
-                Vector3.one * -0.5f + new Vector3(0, 1f, 0),
-                Vector3.one * -0.5f + new Vector3(-1f, 0f, 0f),
-                Vector3.one * -0.5f + new Vector3(1f, 0f, 0f),
-                Vector3.one * -0.5f + new Vector3(0f, 0f, -1f),
-                Vector3.one * -0.5f + new Vector3(0f, 0f, 1f)
+                Vector3.one + new Vector3(0, -1f, 0),
+                Vector3.one + new Vector3(0, 1f, 0),
+                Vector3.one + new Vector3(-1f, 0f, 0f),
+                Vector3.one + new Vector3(1f, 0f, 0f),
+                Vector3.one + new Vector3(0f, 0f, -1f),
+                Vector3.one + new Vector3(0f, 0f, 1f)
                 ];
 
             command.color = color;
