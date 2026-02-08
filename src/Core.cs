@@ -7,7 +7,7 @@ using UnityEngine;
 using BoneLib;
 using NEP.NEDebug.Console;
 
-[assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.4", "Not Enough Photons: adamdev", null)]
+[assembly: MelonInfo(typeof(NEP.NEDebug.Core), "NEDebug", "0.0.5", "Not Enough Photons: adamdev", null)]
 [assembly: MelonGame("Stress Level Zero", "BONELAB")]
 
 namespace NEP.NEDebug

@@ -34,6 +34,33 @@ namespace NEP.NEDebug
             DrawLine(ray.origin, ray.origin + ray.direction, color);
         }
 
+        public static void DrawPosition(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            if (!m_drawer)
+            {
+                return;
+            }
+
+            NEDrawCommand command = new NEDrawCommand();
+            command.transform = Matrix4x4.identity;
+            command.transform *= Matrix4x4.TRS(position, rotation, scale);
+            command.drawType = GL.LINES;
+            command.ztest = m_ztest;
+
+            command.positions = [
+                Vector3.one * -0.5f + new Vector3(0, -1f, 0),
+                Vector3.one * -0.5f + new Vector3(0, 1f, 0),
+                Vector3.one * -0.5f + new Vector3(-1f, 0f, 0f),
+                Vector3.one * -0.5f + new Vector3(1f, 0f, 0f),
+                Vector3.one * -0.5f + new Vector3(0f, 0f, -1f),
+                Vector3.one * -0.5f + new Vector3(0f, 0f, 1f)
+                ];
+
+            command.color = color;
+
+            m_drawer.PushCommand(command);
+        }
+
         public static void DrawPlane(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
             if (!m_drawer)
